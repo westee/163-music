@@ -59,7 +59,7 @@
             uploadStatus.textContent = sourceLink + " " + response.key
             // console.log(sourceLink)
             // 获取上传成功后的文件的Url
-            window.eventHub.emit('upload',{
+            window.eventHub.emit('new',{
               url: sourceLink,
               name: response.key
             })

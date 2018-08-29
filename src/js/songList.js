@@ -10,7 +10,7 @@
       $el.html(this.template)
       let {songs} = data
       let liList = songs.map((song)=> 
-        $('<li></li>').text(song.name).attr('data-song-id', song.id)     //将改属性添加到li中
+        $('<li></li>').text(song.name).attr('data-song-id', song.id)     //将id添加到li中
       ) 
       $el.find('ul').empty()
       liList.map((domLi)=>{
@@ -26,6 +26,7 @@
       $(this.el).find('.active').removeClass("active")
     }
   }
+
   let model = {
     data: {
       songs: [ ]
@@ -45,6 +46,7 @@
       this.view = view
       this.model = model
       this.view.render(this.model.data) 
+      this.bindEventHub()
       this.bindEvents()
       this.getAllSongs()
     },
@@ -69,12 +71,22 @@
       })
     },
     bindEventHub(){
-      window.eventHub.on('upload', ()=>{
-        this.view.clearActive()
-      })
       window.eventHub.on('create', (songData)=>{
         this.model.data.songs.push(songData)
         this.view.render(this.model.data)
+      })
+      window.eventHub.on('new', ()=>{
+        this.view.clearActive()
+      })
+      window.eventHub.on('update', (song)=>{ 
+        console.log(song)
+        let songs = this.model.data.songs            //将songList中model下的songs数据保存到songs中
+        for(let i=0; i<songs.length; i++){           
+          if(songs[i].id === song.id){             //将songs中的歌曲id逐个和传进来的歌曲id进行对比
+            Object.assign(songs[i], song)           //找到后用传进来的数据覆盖掉本地的数据
+          }
+        }
+        this.view.render(this.model.data)           //然后重新render要显示的数据
       })
     }
   }
