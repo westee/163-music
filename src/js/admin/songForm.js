@@ -6,31 +6,41 @@
     },
     template: `
       <form class="form">
-      <div class="row">
-        <label>歌名
-        </label>
-        <input name="name" type="text" value="__name__">
-      </div>
-      <div class="row">
-        <label>歌手
-        </label>
-        <input name="singer" type="text" value='__singer__'>
-      </div>
-      <div class="row">
-        <label>链接
-        </label>
-        <input name='url' type="text" value="__url__">
-      </div>
-      <div class="row actions">
-          <label>
+        <div class="row">
+          <label>歌名
           </label>
-          <input type="submit">
+          <input name="name" type="text" value="__name__">
         </div>
-    </form>
+        <div class="row">
+          <label>歌手
+          </label>
+          <input name="singer" type="text" value='__singer__'>
+        </div>
+        <div class="row">
+          <label>链接
+          </label>
+          <input name='url' type="text" value="__url__">
+        </div>
+        <div class="row">
+          <label>封面
+          </label>
+          <input name='cover' type="text" value="__cover__">
+        </div>
+        <div class="row">
+          <label>歌词
+          </label>
+          <textarea cols=60 rows=18 name='lyrics'>__lyrics__</textarea>
+        </div>
+        <div class="row actions">
+            <label>
+            </label>
+            <input type="submit">
+          </div>
+      </form>
     `,
     render(data = {}) {
       // 把歌名和link传进来,填进页面
-      let placeholders = ["name", 'url', 'singer', "id"]
+      let placeholders = ["name", 'url', 'singer', "id", 'cover', 'lyrics']
       let html = this.template
       placeholders.map((string) => {
         html = html.replace(`__${string}__`, data[string] || '') //兼容,否则输入框中默认出现undefined
@@ -53,21 +63,25 @@
       name: '',
       singer: '',
       url: '',
-      id: ''
+      id: '',
+      cover: '',
+      lyrics:''
     },
-    update(data){
+    update(data) {
       // 第一个参数是 className，第二个参数是 objectId
-      
+
       var song = AV.Object.createWithoutData('Song', this.data.id);
       // 修改属性
-      song.set('name', data.name );
-      song.set('singer', data.singer );
-      song.set('url', data.url );
+      song.set('name', data.name);
+      song.set('singer', data.singer);
+      song.set('url', data.url);
+      song.set('cover', data.cover)
+      song.set('lyrics', data.lyrics)
       // 保存到云端
-      return song.save().then((response)=>{
+      return song.save().then((response) => {
         Object.assign(this.data, data)
         return response
-      }) 
+      })
     },
     create(data) {
       // 声明一个 Song 类型
@@ -77,6 +91,9 @@
       song.set('name', data.name);
       song.set('singer', data.singer);
       song.set('url', data.url);
+      song.set('cover', data.cover);
+      song.set('lyrics', data.lyrics);
+      
       return song.save().then((newSong) => {
         // 成功保存之后，执行其他逻辑.
         let {
@@ -118,7 +135,9 @@
             "name": '',
             "url": '',
             "id": "",
-            "singer": ''
+            "singer": '',
+            "cover":'',
+            "lyrics":''
           }
         } else {
           Object.assign(this.model.data, data)
@@ -128,7 +147,7 @@
       })
     },
     create() {
-      let needs = 'name singer url'.split(' ') //得到一个数组
+      let needs = 'name singer url cover lyrics'.split(' ') //得到一个数组
       let data = {}
       needs.map((string) => {
         data[string] = this.view.$el.find(`[name="${string}"]`).val() //val()一般都是在input中用
@@ -142,16 +161,16 @@
         })
     },
     update() {
-      let needs = 'name singer url'.split(' ') //得到一个数组
+      let needs = 'name singer url cover lyrics'.split(' ') //得到一个数组
       let data = {}
       needs.map((string) => {
         data[string] = this.view.$el.find(`[name="${string}"]`).val() //val()一般都是在input中用
       })
       this.model.update(data)
-        .then(()=>{
+        .then(() => {
           alert('更新成功')
           console.log(JSON.parse(JSON.stringify(this.model.data)))
-          window.eventHub.emit('update', JSON.parse(JSON.stringify(this.model.data)) )
+          window.eventHub.emit('update', JSON.parse(JSON.stringify(this.model.data)))
         })
     },
     bindEvents() {

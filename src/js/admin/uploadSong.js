@@ -25,7 +25,7 @@
         //
         get_new_uptoken: false, //设置上传文件的时候是否每次都重新获取新的token
         container: 'container', //上传区域DOM ID，默认是browser_button的父元素，
-        max_file_size: '10mb', //最大文件体积限制
+        max_file_size: '20mb', //最大文件体积限制
         flash_swf_url: 'js/plupload/Moxie.swf', //引入flash,相对路径
         max_retries: 3, //上传失败最大重试次数
         dragdrop: true, //开启可拖曳上传

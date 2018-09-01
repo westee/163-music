@@ -5,10 +5,12 @@
       this.$el = $(this.el)
     },
     render(data){
-      let {songs} = data
+      // let {songs} = data    解构赋值
+      let songs = data.songs
+      console.log("here")
+      console.log(data)
       console.log(songs)
       songs.map((song)=>{
-        console.log("here")
         let $li = $(`
           <li>
             <h3>${song.name}</h3>
@@ -18,7 +20,7 @@
               </svg>
               ${song.singer}
             </p>
-            <a class="playButton" href='#'>
+            <a class="playButton" href='./song.html?id=${song.id}'>
               <svg class='icon icon-play'>
                 <use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href="#icon-play"></use>
               </svg>
