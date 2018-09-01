@@ -29,6 +29,7 @@
 
 .disc-container {
   position: relative;
+  z-index: 9;
 }
 
 .disc-container .icon-wrapper {
@@ -97,8 +98,7 @@
 
 .song-description {
   flex-grow: 1;
-  /* color: #AEABAC; */
-  color: red;
+  color: #AEABAC;
   text-align: center;
   line-height: 2;
   margin-top: 20px;

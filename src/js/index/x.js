@@ -9,8 +9,23 @@
         song,
         status
       } = data
-      this.$el.css("background", `url(${song.cover}) center no-repeat `); //播放时的专辑背景
-      this.$el.css('background-size', 'cover')
+      // let el = document.getElementById('app')
+      // let beforeStyle = window.getComputedStyle(el, "::before")
+      var style = document.createElement('style')
+      style.innerHTML=` #app::before{
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            filter: blur(5px);
+            background: url(${song.cover}) center;
+            z-index: -1;
+            background-size:cover;
+          }         
+          `
+      document.head.appendChild(style)
       this.$el.find('img.cover').attr('src', song.cover) //旋转的封面
       this.$el.find('h1').text(`${song.name}`)
       if (this.$el.find('audio').attr('src') !== song.url) {
@@ -27,7 +42,6 @@
       } else {
         this.$el.find('.disc-container').removeClass('playing')
       }
-      // this.$el.find('.song-description>h1').text()
       let {
         lyrics
       } = song
@@ -53,7 +67,7 @@
     },
     showLyric(time) {
       let allP = this.$el.find('.lyric>.lines>p')
-      this.$el.find('.lyric').css('border',"1px solid cyan")     
+      // this.$el.find('.lyric').css('border',"1px solid cyan")     
       for (let i = 0; i < allP.length; i++) {
         if(i === allP.length-1){
           break
@@ -65,7 +79,6 @@
             let pHeight = p.getBoundingClientRect().top
             let linesHeight = this.$el.find('.lyric>.lines')[0].getBoundingClientRect().top
             let height = pHeight- linesHeight
-            console.log(height)
             this.$el.find('.lyric>.lines').css({
               transform: `translateY(${-height}px)`
             })
