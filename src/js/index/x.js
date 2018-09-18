@@ -30,6 +30,8 @@
       this.$el.find('h1').text(`${song.name}`)
       if (this.$el.find('audio').attr('src') !== song.url) {
         let audio = this.$el.find('audio').attr('src', song.url).get(0)
+        console.log('audio')
+        console.log(audio)
         audio.onended = () => {
           window.eventHub.emit('songEnd')
         }
@@ -76,9 +78,11 @@
           let nextTime = allP.eq(i+1).attr('data-time')
           if (time > currentTime && time < nextTime){
             let p = allP[i]
+            $(allP[i]).addClass('active').siblings().removeClass('active')      //高亮歌词
             let pHeight = p.getBoundingClientRect().top
             let linesHeight = this.$el.find('.lyric>.lines')[0].getBoundingClientRect().top
-            let height = pHeight- linesHeight
+            let height = pHeight- linesHeight-24
+            console.log(height)
             this.$el.find('.lyric>.lines').css({
               transform: `translateY(${-height}px)`
             })
@@ -89,6 +93,10 @@
       }
     },
     play() {
+      console.log(this.$el.find('audio')[0].src)
+      if(this.$el.find('audio')[0].src.indexOf('https') !== -1){
+        this.$el.find('audio')[0].src = this.$el.find('audio')[0].src.replace(/https/, "http")
+      }
       this.$el.find('audio')[0].play()
     },
     pause() {

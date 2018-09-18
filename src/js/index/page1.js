@@ -40,7 +40,6 @@
       let script1 = document.createElement('script')
       script1.src = './js/index/page1-1.js'
       script1.onload = function () {
-        console.log(1)
       }
       document.body.appendChild(script1)
     },

@@ -8,9 +8,10 @@
   <title>播放</title>
   <link rel="stylesheet" href="./css/song.css">
 </head>
+<body>
 <!-- <div id="app"></div> -->
 <div class="page" id="app">
-  <audio src="#"></audio>     
+  <audio src="#"></audio>
   <!-- src可以写#或者about:blank,不可以是占位符，是占位符会默认以占位符未地址请求 -->
   <div class="disc-container">
     <img class="pointer" src="//s3.music.126.net/m/s/img/needle-ip6.png?be4ebbeb6befadfcae75ce174e7db862 " alt="">
@@ -25,8 +26,7 @@
       </div>
       <img class="ring" src="//s3.music.126.net/m/s/img/disc-ip6.png?69796123ad7cfe95781ea38aac8f2d48" alt="">
       <img class="light" src="//s3.music.126.net/m/s/img/disc_light-ip6.png?996fc8a2bc62e1ab3f51f135fc459577" alt="">
-      <img src="#"
-        alt="" class="cover">
+      <img src="#" alt="" class="cover">
       <!-- <img src="http://img1.kuwo.cn/star/albumcover/240/14/48/2901479650.jpg"
         alt="" class="cover"> -->
     </div>
@@ -45,7 +45,14 @@
   </div>
 </div>
 
-<body>
+
+  <script>
+    window.onerror = (a,b,c)=>{
+      alert(a)
+      alert(b)
+      alert(c)
+    }
+  </script>
   <script src="//at.alicdn.com/t/font_395875_4hwrep7mypx8ncdi.js"></script>
   <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
   <!-- <script src="./../node_modules/jquery/dist/jquery.min.js"></script> -->

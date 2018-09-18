@@ -2,8 +2,6 @@
   let view = {
     el: '#site-loading',
     show(){
-      console.log(2)
-      console.log($(this.el))
       $(this.el).addClass('active')
     },
     hide(){
@@ -13,8 +11,6 @@
   let controller = {
     init(view){
       this.view = view
-      console.log(3)
-      console.log(this.view)
       this.bindEventHub()
     },
     bindEventHub(){
@@ -26,7 +22,5 @@
       })
     }
   }
-  console.log(1)
-  console.log($(view.el))
   controller.init(view)
 }

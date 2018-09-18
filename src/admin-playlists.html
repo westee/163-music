@@ -1,0 +1,148 @@
+<!DOCTYPE <!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>歌单管理页面</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./css/default.css">
+  <style>
+  </style>
+</head>
+
+<body>
+  <h1>创建歌单</h1>
+  <div class="playlistForm-wrapper">
+    <form class="playlistForm">
+      <div class="row">
+        <label>歌单名
+          <input type="text" name="name">
+        </label>
+      </div>
+      <div class="row">
+        <label>歌单简介
+          <textarea name="summary" id="" cols="30" rows="10">
+
+
+
+          </textarea>
+        </label>
+      </div>
+      <div class="row">
+        <button type="submit">
+          创建
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div id="uploadStatus"></div>
+  <script src="./../node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="./../node_modules/leancloud-storage/dist/av-min.js"></script>
+  <script src="./js/initial/av.js"></script>
+  <script src="./../vendors/moxie.min.js"></script>
+  <script src="./../node_modules/plupload/js/plupload.min.js"></script>
+  <!-- <script src="./../node_modules/qiniu-js/dist/qiniu.min.js "></script> -->
+  <script src="./js/admin/eventHub.js"></script>
+  <script src="./js/admin/loading.js"></script>
+  <script src="./js/admin/songForm.js"></script>
+  <script src="./js/admin/newSong.js"></script>
+  <script src="./js/admin/songList.js"></script>
+  <!-- <script src="./js/admin/uploadSong.js"></script> -->
+  <script>
+    {
+      let view = {
+        el: '.playlistForm-wrapper',
+        init() {
+          this.$el = $(this.el)
+          this.$form = $(this.el).find('form')
+        }
+      }
+      let model = {
+        create(data) {
+          var PlayList = AV.Object.extend('PlayList');
+          var playlist = new PlayList();
+          playlist.set('name', "cc");
+          playlist.set('summary', "aa");
+        }
+      }
+      let controller = {
+        init(view, model) {
+          this.view = view
+          this.model = model
+          this.view.init()
+          this.bindEvents()
+        },
+        bindEvents() {
+
+          this.view.$el.on('submit', 'form', (e) => {
+            e.preventDefault()
+            let form = this.view.$form.get(0)
+            let keys = ['name', 'summary']
+            let data = {}
+            keys.reduce((prev, item) => {
+              prev[item] = form[item].value
+              return prev
+            }, data)
+            console.log(data)
+          })
+        }
+      }
+      controller.init(view, model)
+    }
+  </script>
+  <script>
+    // var Song = AV.Object.extend('Song'); // 声明一个 Song 类型
+    // var song = new Song(); // 新建一个 song 对象
+    // song.set('name', 'data.name');
+
+    // var PlayList = AV.Object.extend('PlayList');
+    // var playlist = new PlayList();
+    // playlist.set('name', "cc");
+    // playlist.set('summary', "aa");
+
+    // song.set('dependent', playlist); // 为song设置 dependent 属性为playlist
+
+    // song.save().then((newSong) => {
+    //   // 成功保存之后，执行其他逻辑.
+    //   let {
+    //     id,
+    //     attributes
+    //   } = newSong;
+    //   Object.assign(this.data, {
+    //     id,
+    //     ...attributes
+    //   })
+    // }, (error) => {
+    //   // 异常处理
+    //   console.error(error);
+    // });
+
+
+
+
+
+    /*playlist.save().then((newPlayList) => {
+      // 成功保存之后，执行其他逻辑.
+      let {
+        id,
+        attributes
+      } = newSong;
+      Object.assign(this.data, {
+        id,
+        ...attributes
+        // id = id,
+        // name: attributes.name,
+        // summary: attributes.summary,
+        // url: attributes.url
+      })
+    }, (error) => {
+      // 异常处理
+      console.error(error);
+    });  */
+  </script>
+
+</body>
+
+</html>
